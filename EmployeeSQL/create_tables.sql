@@ -1,15 +1,48 @@
 ﻿-- Exported from QuickDBD: https://www.quickdatabasediagrams.com/
 -- Link to schema: https://app.quickdatabasediagrams.com/#/d/fFvWk6
--- Modified after import to correct any mistakes
+-- Modified after import to correct any mistakes and change the order
 
 -- Drop table if needed
 DROP TABLE departments;
 
+-- Create table
 CREATE TABLE "departments" (
     "dept_no" VARCHAR(4)   NOT NULL,
     "dept_name" VARCHAR(18)   NOT NULL,
     CONSTRAINT "pk_departments" PRIMARY KEY ("dept_no")
 );
+
+-- Drop table if needed
+DROP TABLE titles;
+
+CREATE TABLE "titles" (
+    "title_id" VARCHAR(5)   NOT NULL,
+    "title" VARCHAR(18),
+    CONSTRAINT "pk_titles" PRIMARY KEY (
+        "title_id"
+     )
+);
+
+-- Drop table if needed
+DROP TABLE employees;
+
+CREATE TABLE "employees" (
+    "emp_no" INT   NOT NULL,
+    "emp_title_id" VARCHAR(5)   NOT NULL,
+    "birth_date" VARCHAR(10)   NOT NULL,
+    "first_name" VARCHAR(14)   NOT NULL,
+    "last_name" VARCHAR(16)   NOT NULL,
+    "sex" CHAR(1),
+    "hire_date" VARCHAR(10)    NOT NULL,
+    CONSTRAINT "pk_employees" PRIMARY KEY (
+        "emp_no"
+     )
+);
+
+-- Convert string to date in employee table (after data import)
+ALTER TABLE employees
+ALTER hire_date TYPE date USING TO_DATE(hire_date,'MM/DD/YYYY'),
+ALTER birth_date TYPE date USING TO_DATE(birth_date,'MM/DD/YYYY');
 
 -- Drop table if needed
 DROP TABLE dept_emp;
@@ -28,39 +61,14 @@ CREATE TABLE "dept_manager" (
 );
 
 -- Drop table if needed
-DROP TABLE employees;
-
-CREATE TABLE "employees" (
-    "emp_no" INT   NOT NULL,
-    "emp_title_id" VARCHAR(5)   NOT NULL,
-    "birth_date" VARCHAR(10)   NOT NULL,
-    "first_name" VARCHAR(14)   NOT NULL,
-    "last_name" VARCHAR(16)   NOT NULL,
-    "sex" CHAR(1)   NOT NULL,
-    "hire_date" VARCHAR(10)    NOT NULL,
-    CONSTRAINT "pk_employees" PRIMARY KEY (
-        "emp_no"
-     )
-);
-
--- Drop table if needed
 DROP TABLE salaries;
 
 CREATE TABLE "salaries" (
     "emp_no" INT   NOT NULL,
-    "salary" INT   NOT NULL
+    "salary" INT
 );
 
--- Drop table if needed
-DROP TABLE titles;
 
-CREATE TABLE "titles" (
-    "title_id" VARCHAR(5)   NOT NULL,
-    "title" VARCHAR(18)   NOT NULL,
-    CONSTRAINT "pk_titles" PRIMARY KEY (
-        "title_id"
-     )
-);
 
 ALTER TABLE "dept_emp" ADD CONSTRAINT "fk_dept_emp_emp_no" FOREIGN KEY("emp_no")
 REFERENCES "employees" ("emp_no");
@@ -79,4 +87,6 @@ REFERENCES "titles" ("title_id");
 
 ALTER TABLE "salaries" ADD CONSTRAINT "fk_salaries_emp_no" FOREIGN KEY("emp_no")
 REFERENCES "employees" ("emp_no");
+
+
 
