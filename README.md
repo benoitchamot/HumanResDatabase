@@ -35,7 +35,7 @@ Code to select employees hired in 1986 with `hire_date` casted as `VARCHAR(10)`:
 Only a handful of columns in the different tables do not include a NOT NULL statement. While the data only includes non-null values, the following fields allow for NULL values:
 - `titles.title`: we allow the HR department to define a title that is an empty string. This could be the case for employees that have required a title change or a title that is not yet in the system. It is however preferred to have this defined as "Not applicable" or something similar.
 - `employees.sex`: we allow the employee to have no gender specified.
-- `salaries.salary`: when a salary is being negotiated, or in the case where an unpaid intern is in the system, a salary could be left blank. A value of 0 could be preferred by if no no-cost invoice or paysheet is issued, a NULL value may be preferred. We do not discuss the morality or legality of this practice in this assigment :)
+- `salaries.salary`: when a salary is being negotiated, or in the case where an unpaid intern is in the system, a salary could be left blank. A value of 0 could be preferred but if no no-cost invoice or paysheet is issued, a NULL value may be preferred. We do not discuss the morality or legality of this practice in this assigment :)
 
 ### Composite keys
 The assignment requires primary keys to be set for each table. In the case of tables `dept_emp` and `dept_manager`, repeating values do not allow the creation of a primary key from the existing data. A composite key could be created by joining both column or by creating a `SERIAL` id. Since these tables are used as junction tables, we have elected not to create any additional keys that would not add any value to the data model.
