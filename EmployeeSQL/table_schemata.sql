@@ -2,19 +2,14 @@
 -- Link to schema: https://app.quickdatabasediagrams.com/#/d/fFvWk6
 -- Modified after import to correct any mistakes and change the order
 
--- Drop table if needed
-DROP TABLE departments;
-
--- Create table
+-- STEP 1: create table before importing from departments.csv
 CREATE TABLE "departments" (
     "dept_no" VARCHAR(4)   NOT NULL,
     "dept_name" VARCHAR(18)   NOT NULL,
     CONSTRAINT "pk_departments" PRIMARY KEY ("dept_no")
 );
 
--- Drop table if needed
-DROP TABLE titles;
-
+-- STEP 2: create table before importing from titles.csv
 CREATE TABLE "titles" (
     "title_id" VARCHAR(5)   NOT NULL,
     "title" VARCHAR(18),
@@ -23,9 +18,7 @@ CREATE TABLE "titles" (
      )
 );
 
--- Drop table if needed
-DROP TABLE employees;
-
+-- STEP 3: create table before importing from employees.csv
 CREATE TABLE "employees" (
     "emp_no" INT   NOT NULL,
     "emp_title_id" VARCHAR(5)   NOT NULL,
@@ -39,37 +32,30 @@ CREATE TABLE "employees" (
      )
 );
 
--- Convert string to date in employee table (after data import)
+-- STEP 3.1: Convert string to date in employee table (after data import)
 ALTER TABLE employees
-ALTER hire_date TYPE date USING TO_DATE(hire_date,'MM/DD/YYYY'),
-ALTER birth_date TYPE date USING TO_DATE(birth_date,'MM/DD/YYYY');
+	ALTER hire_date TYPE date USING TO_DATE(hire_date,'MM/DD/YYYY'),
+	ALTER birth_date TYPE date USING TO_DATE(birth_date,'MM/DD/YYYY');
 
--- Drop table if needed
-DROP TABLE dept_emp;
-
+-- STEP 4: create table before importing from dept_emp.csv
 CREATE TABLE "dept_emp" (
     "emp_no" INT   NOT NULL,
     "dept_no" VARCHAR(4)   NOT NULL
 );
 
--- Drop table if needed
-DROP TABLE dept_manager;
-
+-- STEP 5: create table before importing from dept_manager.csv
 CREATE TABLE "dept_manager" (
     "dept_no" VARCHAR(4)   NOT NULL,
     "emp_no" INT   NOT NULL
 );
 
--- Drop table if needed
-DROP TABLE salaries;
-
+-- STEP 6: create table before importing from salaries.csv
 CREATE TABLE "salaries" (
     "emp_no" INT   NOT NULL,
     "salary" INT
 );
 
-
-
+-- Add FOREIGN KEYS constraints
 ALTER TABLE "dept_emp" ADD CONSTRAINT "fk_dept_emp_emp_no" FOREIGN KEY("emp_no")
 REFERENCES "employees" ("emp_no");
 
