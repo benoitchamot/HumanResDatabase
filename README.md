@@ -1,6 +1,4 @@
-# sql-challenge
-Repository for Monash University Bootcamp Module 9
-
+# HR database
 ## File structure
 - `DataExploration.ipynb` is used to load the data from the CSV files in the `data` directory and suggest a data model based on the data and data types. It also includes the code for the diagram generated on https://quickdatabasediagrams.com/
 - `table_schemata.sql` includes the schema for the creation of the table and the constraints. Please use the Import function in Postgresql to load the data from the CSV files.
